@@ -1,0 +1,7 @@
+~ GAMMA
+    - 3
+    + changed
++ DELTA = 4
+- ALPHA = 1
+
+1 added, 1 removed, 1 changed

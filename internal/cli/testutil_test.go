@@ -5,10 +5,17 @@ import (
 	"path/filepath"
 	"testing"
 
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 
 	"github.com/panic-at/envx/internal/cli"
 )
+
+// init disables colored output for the whole test binary so that captured
+// command output is deterministic regardless of where the tests run.
+func init() {
+	color.NoColor = true
+}
 
 // newTestCmd returns a fresh root command with stdout and stderr redirected to
 // in-memory buffers for inspection.

@@ -22,6 +22,20 @@ type rootOptions struct {
 	noColor    bool
 }
 
+// ExitError wraps an error with the process exit code it should produce.
+// cmd/envx/main.go inspects returned errors with errors.As to choose the exit
+// code; any error that is not an *ExitError maps to exit code 1.
+type ExitError struct {
+	Code int
+	Err  error
+}
+
+// Error returns the wrapped error's message.
+func (e *ExitError) Error() string { return e.Err.Error() }
+
+// Unwrap returns the wrapped error so errors.Is and errors.As see through it.
+func (e *ExitError) Unwrap() error { return e.Err }
+
 // NewRootCmd builds the root cobra command with every subcommand wired in.
 //
 // Output goes to the command's configured writers; callers and tests may
@@ -42,6 +56,12 @@ func NewRootCmd() *cobra.Command {
 	cmd.SetOut(os.Stdout)
 	cmd.SetErr(os.Stderr)
 
+	// Flag-parsing failures (unknown flag, missing required flag, ...) are
+	// usage errors and exit with code 2.
+	cmd.SetFlagErrorFunc(func(_ *cobra.Command, err error) error {
+		return &ExitError{Code: 2, Err: err}
+	})
+
 	cmd.PersistentFlags().StringVar(&opts.configPath, "config", config.DefaultPath(),
 		"path to the envx config file")
 	cmd.PersistentFlags().BoolVar(&opts.noColor, "no-color", noColorDefault(),
@@ -52,6 +72,8 @@ func NewRootCmd() *cobra.Command {
 		newProfileCmd(opts),
 		newSetCmd(opts),
 		newShowCmd(opts),
+		newDiffCmd(opts),
+		newExportCmd(opts),
 	)
 	return cmd
 }
