@@ -39,19 +39,22 @@ cd envx
 make build      # produces ./bin/envx
 ```
 
-## Planned commands
+## Commands
 
-| Command | Purpose |
-|---------|---------|
-| `envx init` | create `.envx/` config in the current directory |
-| `envx profile add <name>` | create a new profile |
-| `envx profile list` | list profiles |
-| `envx set <KEY> <value> --profile <p>` | set a literal value |
-| `envx set <KEY> --ref <uri> --profile <p>` | set a vault reference |
-| `envx show <profile>` | show vars (sensitive values masked; `--reveal` to show) |
-| `envx diff <p1> <p2>` | diff two profiles |
-| `envx run --profile <p> -- <cmd>` | run a command with vars injected |
-| `envx export --profile <p> --format dotenv\|json\|shell` | export resolved vars |
+| Command | Purpose | Status |
+|---------|---------|--------|
+| `envx init` | create `.envx/` config in the current directory | ✅ done |
+| `envx profile add <name>` | create a new profile | ✅ done |
+| `envx profile list` | list profiles | ✅ done |
+| `envx set <KEY> <value> --profile <p>` | set a literal value | ✅ done |
+| `envx set <KEY> --ref <uri> --profile <p>` | set a vault reference | ✅ done |
+| `envx show <profile>` | show vars (sensitive values masked; `--reveal` to show) | ✅ done |
+| `envx diff <p1> <p2>` | diff two profiles | ✅ done |
+| `envx export --profile <p> --format dotenv\|json\|shell` | export resolved vars | ✅ done |
+| `envx run --profile <p> -- <cmd>` | run a command with vars injected | 🚧 planned |
+
+Vault references (`op://…`, `aws-sm://…`) are parsed and validated today; live
+resolution against 1Password and AWS Secrets Manager is still in progress.
 
 ## Development
 
