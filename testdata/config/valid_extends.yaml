@@ -1,0 +1,17 @@
+version: 1
+profiles:
+  dev:
+    vars:
+      DATABASE_URL:
+        type: literal
+        value: postgres://localhost/myapp
+      LOG_LEVEL:
+        type: literal
+        value: debug
+  prod:
+    extends: dev
+    vars:
+      DATABASE_URL:
+        type: ref
+        uri: op://prod-vault/database/url
+        sensitive: true

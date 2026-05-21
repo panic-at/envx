@@ -1,0 +1,7 @@
+version: 1
+profiles:
+  dev:
+    vars:
+      "bad-name":
+        type: literal
+        value: x

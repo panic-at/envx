@@ -1,0 +1,8 @@
+version: 1
+profiles:
+  dev:
+    vars:
+      FOO:
+        type: literal
+        value: x
+        uri: env://X

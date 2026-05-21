@@ -1,5 +1,5 @@
 BINARY  := envx
-PKG     := github.com/SEU_USER/envx
+PKG     := github.com/panic-at/envx
 VERSION := $(shell git describe --tags --always --dirty 2>/dev/null || echo dev)
 LDFLAGS := -X $(PKG)/internal/version.Version=$(VERSION)
 

@@ -19,13 +19,13 @@ versionable, secure way. Unlike a flat `.env` file it supports:
 Requires **Go 1.22+**.
 
 ```sh
-go install github.com/SEU_USER/envx/cmd/envx@latest
+go install github.com/panic-at/envx/cmd/envx@latest
 ```
 
 Or build from source:
 
 ```sh
-git clone https://github.com/SEU_USER/envx
+git clone https://github.com/panic-at/envx
 cd envx
 make build      # produces ./bin/envx
 ```

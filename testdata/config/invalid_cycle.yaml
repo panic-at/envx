@@ -1,0 +1,6 @@
+version: 1
+profiles:
+  a:
+    extends: b
+  b:
+    extends: a
