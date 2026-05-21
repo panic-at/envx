@@ -14,6 +14,15 @@ versionable, secure way. Unlike a flat `.env` file it supports:
   Manager, host environment, …)
 - injecting variables into child processes without polluting your shell
 
+## Demo
+
+![envx demo: init, profile add, set, show, diff, export](docs/demo.gif)
+
+> Recorded with [asciinema](https://asciinema.org). The script lives in
+> [`docs/demo.sh`](docs/demo.sh) — run it standalone with `bash docs/demo.sh`,
+> or replay the cast with `asciinema play docs/demo.cast`. Regeneration steps
+> are documented at the top of `docs/demo.sh`.
+
 ## Installation
 
 Requires **Go 1.22+**.
