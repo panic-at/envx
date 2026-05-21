@@ -1,7 +1,7 @@
 # Build artifacts
 /bin/
 /dist/
-envx
+/envx
 *.exe
 
 # Test & coverage output
