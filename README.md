@@ -8,7 +8,6 @@
 <!-- ![envx demo](docs/demo.gif) -->
 
 [![CI](https://github.com/panic-at/envx/actions/workflows/ci.yml/badge.svg)](https://github.com/panic-at/envx/actions/workflows/ci.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/panic-at/envx)](https://goreportcard.com/report/github.com/panic-at/envx)
 [![codecov](https://codecov.io/gh/panic-at/envx/branch/main/graph/badge.svg)](https://codecov.io/gh/panic-at/envx)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Latest release](https://img.shields.io/github/v/release/panic-at/envx?sort=semver)](https://github.com/panic-at/envx/releases)
