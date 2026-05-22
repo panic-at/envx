@@ -1,8 +1,3 @@
-// Package exporter serializes a resolved set of environment variables into
-// formats consumable by other tools: dotenv files, JSON and POSIX shell.
-//
-// Every exporter writes its keys in ascending lexical order so that output is
-// byte-for-byte deterministic.
 package exporter
 
 import (

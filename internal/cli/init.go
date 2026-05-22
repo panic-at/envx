@@ -22,6 +22,8 @@ func newInitCmd(opts *rootOptions) *cobra.Command {
 		Short: "Initialize a new envx project in the current directory",
 		Long: "init creates the .envx directory and a starter config.yaml " +
 			"containing a single empty profile named 'default'.",
+		Example: "  # Create .envx/config.yaml in the current directory\n" +
+			"  envx init",
 		Args: cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			path := opts.configPath

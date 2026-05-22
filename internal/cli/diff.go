@@ -25,6 +25,10 @@ func newDiffCmd(opts *rootOptions) *cobra.Command {
 			"profiles. Refs are compared as their URIs and never resolved, since\n" +
 			"the resolved value may be secret. Sensitive literal values are masked;\n" +
 			"ref URIs are always shown verbatim.",
+		Example: "  # Human-readable diff\n" +
+			"  envx diff dev prod\n\n" +
+			"  # Machine-readable diff\n" +
+			"  envx diff dev prod --format json",
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			name1, name2 := args[0], args[1]

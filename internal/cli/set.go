@@ -32,6 +32,12 @@ func newSetCmd(opts *rootOptions) *cobra.Command {
 		Short: "Set a variable in a profile",
 		Long: "set defines a variable as either a literal value (positional) or a\n" +
 			"resolver reference (--ref). An existing variable is overwritten.",
+		Example: "  # A literal value\n" +
+			"  envx set PORT 8080 --profile dev\n\n" +
+			"  # A secret literal, masked in show/diff output\n" +
+			"  envx set API_KEY s3cret --profile dev --sensitive\n\n" +
+			"  # A reference resolved at run time from a vault\n" +
+			"  envx set DB_PASSWORD --ref op://vault/db/password --profile dev",
 		Args: cobra.RangeArgs(1, 2),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			key := args[0]

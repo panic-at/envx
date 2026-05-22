@@ -1,9 +1,3 @@
-// Package cli implements the envx command-line interface on top of Cobra.
-//
-// Commands never write to os.Stdout or os.Stderr directly; they use the
-// writers attached to their *cobra.Command (OutOrStdout, ErrOrStderr) so that
-// tests can capture output. Command failures are reported by returning an
-// error from RunE — only cmd/envx/main.go decides the process exit code.
 package cli
 
 import (
@@ -54,7 +48,11 @@ func NewRootCmd() *cobra.Command {
 		Short: "envx manages layered environment-variable profiles",
 		Long: "envx manages environment variables as named, inheritable profiles.\n" +
 			"Values may be stored inline or referenced from external secret stores.",
-		Version:       version.Version,
+		Example: "  envx init\n" +
+			"  envx profile add dev\n" +
+			"  envx set DATABASE_URL postgres://localhost/dev --profile dev\n" +
+			"  envx run --profile dev -- ./server",
+		Version:       version.Info(),
 		SilenceUsage:  true,
 		SilenceErrors: true,
 	}

@@ -33,6 +33,12 @@ func newExportCmd(opts *rootOptions) *cobra.Command {
 			"If any variable fails to resolve, export aborts unless --allow-errors\n" +
 			"is given, in which case the failing variables are omitted with a\n" +
 			"warning on stderr.",
+		Example: "  # A dotenv file on stdout\n" +
+			"  envx export --profile dev\n\n" +
+			"  # JSON written to a file\n" +
+			"  envx export --profile dev --format json --output dev.json\n\n" +
+			"  # A shell script to source\n" +
+			"  eval \"$(envx export --profile dev --format shell)\"",
 		Args: cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			// --profile is required; a missing value is a usage error (exit 2).

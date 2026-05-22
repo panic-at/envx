@@ -1,0 +1,6 @@
+# Require contributors to pick a template instead of opening a blank issue.
+blank_issues_enabled: false
+contact_links:
+  - name: Question or discussion
+    url: https://github.com/panic-at/envx/discussions
+    about: Ask a question or discuss an idea before filing an issue.

@@ -1,6 +1,3 @@
-// Package mask renders secret values in a partially-hidden form suitable for
-// human-facing output, revealing just enough to recognise a value without
-// disclosing it.
 package mask
 
 // Mask returns a masked representation of value, counting characters by rune

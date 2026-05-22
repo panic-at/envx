@@ -1,11 +1,3 @@
-// Package runner executes a command as a child process with a profile's
-// resolved variables injected into its environment.
-//
-// The injected variables live only in the child's environment: runner never
-// calls os.Setenv, so they never leak into the envx process or the user's
-// shell. The runner connects the child to the supplied stdio, forwards
-// interrupt signals to it, enforces a grace window before escalating to
-// SIGKILL, and propagates the child's exit code to the caller.
 package runner
 
 import (
@@ -78,7 +70,9 @@ func Run(ctx context.Context, opts Options) (int, error) {
 		grace = defaultGrace
 	}
 
-	cmd := exec.CommandContext(ctx, opts.Command[0], opts.Command[1:]...)
+	// G204: executing the user-supplied command is the entire purpose of
+	// "envx run"; the command and its arguments are passed through verbatim.
+	cmd := exec.CommandContext(ctx, opts.Command[0], opts.Command[1:]...) //nolint:gosec
 	cmd.Env = BuildEnv(host, opts.Vars, opts.Inherit, opts.Override)
 	cmd.Stdin = opts.Stdin
 	cmd.Stdout = opts.Stdout
@@ -173,7 +167,7 @@ func waitExitCode(err error) (int, error) {
 		if code, ok := signalExitCode(exitErr.ProcessState); ok {
 			return code, nil
 		}
-		return exitErr.ProcessState.ExitCode(), nil
+		return exitErr.ExitCode(), nil
 	}
 	return 1, fmt.Errorf("wait for command: %w", err)
 }

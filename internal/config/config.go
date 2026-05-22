@@ -1,5 +1,3 @@
-// Package config loads, saves and validates the envx project configuration,
-// stored as YAML under a project's .envx directory.
 package config
 
 import (
@@ -44,7 +42,10 @@ func New() *Config {
 // Load reads, parses and validates the envx config file at path. Unknown YAML
 // fields and schema violations are reported as errors.
 func Load(path string) (*Config, error) {
-	data, err := os.ReadFile(path)
+	// G304: path is the config file location the user explicitly chose
+	// (the --config flag or its default); reading it is the point of Load.
+	data, err := os.ReadFile(path) //nolint:gosec
+
 	if err != nil {
 		return nil, fmt.Errorf("read config %s: %w", path, err)
 	}
@@ -61,14 +62,14 @@ func Load(path string) (*Config, error) {
 }
 
 // Save validates the config and writes it as YAML to path, creating parent
-// directories as needed. The file is written with 0600 permissions because it
-// may hold literal secret values.
+// directories as needed. Directories are created 0700 and the file is written
+// 0600, because the config may hold literal secret values.
 func (c *Config) Save(path string) error {
 	if err := c.Validate(); err != nil {
 		return fmt.Errorf("refusing to save invalid config: %w", err)
 	}
 	if dir := filepath.Dir(path); dir != "" && dir != "." {
-		if err := os.MkdirAll(dir, 0o755); err != nil {
+		if err := os.MkdirAll(dir, 0o700); err != nil {
 			return fmt.Errorf("create config dir %s: %w", dir, err)
 		}
 	}

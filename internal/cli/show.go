@@ -25,6 +25,10 @@ func newShowCmd(opts *rootOptions) *cobra.Command {
 			"Without --reveal, refs are shown as their URIs and sensitive literals\n" +
 			"are masked. With --reveal, refs are resolved; sensitive values are\n" +
 			"still masked (a future --unsafe flag will reveal them in full).",
+		Example: "  # Refs as URIs, sensitive literals masked\n" +
+			"  envx show dev\n\n" +
+			"  # Resolve refs against their vaults\n" +
+			"  envx show dev --reveal",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			name := args[0]

@@ -24,7 +24,12 @@ func newProfileCmd(opts *rootOptions) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "profile",
 		Short: "Manage profiles",
-		Args:  cobra.NoArgs,
+		Long: "profile groups the subcommands that create and list profiles.\n" +
+			"Run it with a subcommand: 'profile add' or 'profile list'.",
+		Example: "  envx profile add staging\n" +
+			"  envx profile add prod --extends staging\n" +
+			"  envx profile list",
+		Args: cobra.NoArgs,
 	}
 	cmd.AddCommand(newProfileAddCmd(opts), newProfileListCmd(opts))
 	return cmd
@@ -37,7 +42,13 @@ func newProfileAddCmd(opts *rootOptions) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "add <name>",
 		Short: "Add a new, empty profile",
-		Args:  cobra.ExactArgs(1),
+		Long: "add creates a new, empty profile. With --extends the profile\n" +
+			"inherits every variable of an existing parent profile.",
+		Example: "  # A standalone profile\n" +
+			"  envx profile add dev\n\n" +
+			"  # A profile that inherits from another\n" +
+			"  envx profile add prod --extends dev",
+		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			name := args[0]
 			if !profileNameRe.MatchString(name) {
@@ -79,7 +90,10 @@ func newProfileListCmd(opts *rootOptions) *cobra.Command {
 	return &cobra.Command{
 		Use:   "list",
 		Short: "List all profiles",
-		Args:  cobra.NoArgs,
+		Long: "list prints every profile with its variable count and the parent\n" +
+			"profile it extends, if any.",
+		Example: "  envx profile list",
+		Args:    cobra.NoArgs,
 		RunE: func(cmd *cobra.Command, _ []string) error {
 			cfg, err := config.Load(opts.configPath)
 			if err != nil {

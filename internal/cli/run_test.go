@@ -31,11 +31,11 @@ func TestMain(m *testing.M) {
 	build := exec.Command("go", "build", "-o", helperBin, "../../testdata/helper")
 	if out, err := build.CombinedOutput(); err != nil {
 		fmt.Fprintf(os.Stderr, "cli test: build helper: %v\n%s", err, out)
-		os.RemoveAll(dir)
+		_ = os.RemoveAll(dir)
 		os.Exit(1)
 	}
 	code := m.Run()
-	os.RemoveAll(dir)
+	_ = os.RemoveAll(dir)
 	os.Exit(code)
 }
 

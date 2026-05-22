@@ -1,0 +1,37 @@
+# golangci-lint configuration (schema v2).
+# Run locally with: golangci-lint run
+version: "2"
+
+run:
+  timeout: 5m
+
+linters:
+  # Start from nothing and enable an explicit, reviewed set.
+  default: none
+  enable:
+    - errcheck # unchecked errors
+    - govet # suspicious constructs
+    - staticcheck # bugs, simplifications, style
+    - ineffassign # assignments never used
+    - unused # unused code
+    - gosec # security issues
+  settings:
+    errcheck:
+      # Writes to a command's stdout/stderr are best-effort: a failed write
+      # (e.g. a closed pipe) is not actionable, and cobra itself ignores them.
+      exclude-functions:
+        - fmt.Fprint
+        - fmt.Fprintf
+        - fmt.Fprintln
+  exclusions:
+    rules:
+      # Test files deliberately spawn helper processes and write fixture
+      # files; gosec's subprocess and permission checks are noise there.
+      - path: _test\.go
+        linters:
+          - gosec
+
+issues:
+  # Report every finding, not just a sample.
+  max-issues-per-linter: 0
+  max-same-issues: 0

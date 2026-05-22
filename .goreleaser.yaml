@@ -1,0 +1,105 @@
+# GoReleaser configuration (schema v2).
+#
+# Local validation (produces binaries without publishing anything):
+#   goreleaser release --snapshot --clean
+#
+# A real release is cut only by CI, when a v* tag is pushed; see
+# .github/workflows/release.yml. The GitHub release is created as a draft so a
+# human reviews and publishes it.
+version: 2
+
+project_name: envx
+
+builds:
+  - id: envx
+    main: ./cmd/envx
+    binary: envx
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+    # Reproducible builds: pin the binary's timestamp to the commit's.
+    mod_timestamp: "{{ .CommitTimestamp }}"
+    ldflags:
+      - -s -w
+      - -X github.com/panic-at/envx/internal/version.Version={{ .Version }}
+      - -X github.com/panic-at/envx/internal/version.Commit={{ .ShortCommit }}
+      - -X github.com/panic-at/envx/internal/version.Date={{ .CommitDate }}
+
+archives:
+  - id: envx
+    # tar.gz everywhere, zip on Windows.
+    formats:
+      - tar.gz
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}
+    files:
+      - README.md
+      - LICENSE
+      - CHANGELOG.md
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  use: github
+  groups:
+    - title: Features
+      regexp: '^.*?feat(\(.+\))??!?:.+$'
+      order: 0
+    - title: Bug fixes
+      regexp: '^.*?fix(\(.+\))??!?:.+$'
+      order: 1
+    - title: Documentation
+      regexp: '^.*?docs(\(.+\))??!?:.+$'
+      order: 2
+    - title: Other changes
+      order: 999
+  filters:
+    exclude:
+      - '^test:'
+      - '^chore:'
+      - '^ci:'
+      - '^style:'
+      - Merge pull request
+      - Merge branch
+
+homebrew_casks:
+  - name: envx
+    # TODO: create the Homebrew tap repository and set owner/name below.
+    # The tap must be a repo named "homebrew-tap" under your GitHub org/user.
+    repository:
+      owner: panic-at
+      name: homebrew-tap
+    homepage: https://github.com/panic-at/envx
+    description: Local-first environment-variable & secrets profile manager.
+    # Skip the tap push on snapshot builds so local runs never need a token.
+    skip_upload: auto
+    hooks:
+      post:
+        # Clear the macOS quarantine attribute so the binary runs unprompted.
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr",
+                           args: ["-dr", "com.apple.quarantine", "#{staged_path}/envx"]
+          end
+
+release:
+  # Publish as a draft: CI uploads the artifacts, a human reviews and releases.
+  draft: true
+  prerelease: auto
+  name_template: "envx {{ .Tag }}"
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-snapshot-{{ .ShortCommit }}"

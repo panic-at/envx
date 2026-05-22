@@ -33,6 +33,12 @@ func newRunCmd(opts *rootOptions) *cobra.Command {
 			"Everything after the '--' separator is passed to the command verbatim.\n" +
 			"The child inherits this terminal's stdin, stdout and stderr; SIGINT and\n" +
 			"SIGTERM are forwarded to it, and its exit code becomes envx's exit code.",
+		Example: "  # Run a server with the dev profile injected\n" +
+			"  envx run --profile dev -- ./server --addr :8080\n\n" +
+			"  # Inspect the injected environment\n" +
+			"  envx run --profile dev -- printenv\n\n" +
+			"  # Run with only the profile's variables, nothing inherited\n" +
+			"  envx run --profile ci --no-inherit -- ./test.sh",
 		Args: cobra.ArbitraryArgs,
 		RunE: func(cmd *cobra.Command, args []string) error {
 			// --profile is required; a missing value is a usage error.

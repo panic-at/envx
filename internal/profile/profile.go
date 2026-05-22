@@ -1,8 +1,3 @@
-// Package profile defines the core domain model for envx: profiles and the
-// environment variables they contain, plus operations to merge and diff them.
-//
-// The package performs no I/O — loading, saving and validation live in the
-// config package, which imports this one.
 package profile
 
 // VarType identifies how a variable's value is obtained at resolution time.
