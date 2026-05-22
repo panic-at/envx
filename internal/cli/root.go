@@ -25,9 +25,14 @@ type rootOptions struct {
 // ExitError wraps an error with the process exit code it should produce.
 // cmd/envx/main.go inspects returned errors with errors.As to choose the exit
 // code; any error that is not an *ExitError maps to exit code 1.
+//
+// Silent suppresses the "envx: ..." message main.go normally prints. It is set
+// when a child command run by "envx run" exits non-zero: the child has already
+// reported its own failure, so envx only needs to mirror the exit code.
 type ExitError struct {
-	Code int
-	Err  error
+	Code   int
+	Err    error
+	Silent bool
 }
 
 // Error returns the wrapped error's message.
@@ -74,6 +79,7 @@ func NewRootCmd() *cobra.Command {
 		newShowCmd(opts),
 		newDiffCmd(opts),
 		newExportCmd(opts),
+		newRunCmd(opts),
 	)
 	return cmd
 }

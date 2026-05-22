@@ -51,7 +51,7 @@ make build      # produces ./bin/envx
 | `envx show <profile>` | show vars (sensitive values masked; `--reveal` to show) | ✅ done |
 | `envx diff <p1> <p2>` | diff two profiles | ✅ done |
 | `envx export --profile <p> --format dotenv\|json\|shell` | export resolved vars | ✅ done |
-| `envx run --profile <p> -- <cmd>` | run a command with vars injected | 🚧 planned |
+| `envx run --profile <p> -- <cmd>` | run a command with vars injected into a child process | ✅ done |
 
 Vault references (`op://…`, `aws-sm://…`) are parsed and validated today; live
 resolution against 1Password and AWS Secrets Manager is still in progress.

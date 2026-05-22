@@ -18,11 +18,14 @@ func main() {
 	if err == nil {
 		return
 	}
-	fmt.Fprintln(os.Stderr, "envx:", err)
 
 	var exit *cli.ExitError
 	if errors.As(err, &exit) {
+		if !exit.Silent {
+			fmt.Fprintln(os.Stderr, "envx:", err)
+		}
 		os.Exit(exit.Code)
 	}
+	fmt.Fprintln(os.Stderr, "envx:", err)
 	os.Exit(1)
 }

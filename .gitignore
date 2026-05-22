@@ -2,6 +2,7 @@
 /bin/
 /dist/
 /envx
+/helper
 *.exe
 
 # Test & coverage output
