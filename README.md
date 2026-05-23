@@ -10,8 +10,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Latest release](https://img.shields.io/github/v/release/panic-at/envx?sort=semver)](https://github.com/panic-at/envx/releases)
 
-> **Status: WIP.** The MVP command set is complete and tested. Vault references
-> (`op://`, `aws-sm://`) are parsed and validated today; live resolution against
+> **Status: v0.1 — MVP complete.** Vault references are parsed and validated; live resolution is the next milestone.
 > 1Password and AWS Secrets Manager is the next milestone. See the
 > [roadmap](#roadmap).
 
