@@ -1,11 +1,9 @@
 # envx
 
+![envx demo](docs/demo.gif)
+
 > Manage environment variables across named profiles, with references to
 > 1Password and AWS Secrets Manager. Local-first. No server. No leaked secrets.
-
-<!-- TODO: demo.gif — record with vhs or asciinema and drop it here.
-     The script lives in docs/demo.sh. -->
-<!-- ![envx demo](docs/demo.gif) -->
 
 [![CI](https://github.com/panic-at/envx/actions/workflows/ci.yml/badge.svg)](https://github.com/panic-at/envx/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/panic-at/envx/branch/main/graph/badge.svg)](https://codecov.io/gh/panic-at/envx)
